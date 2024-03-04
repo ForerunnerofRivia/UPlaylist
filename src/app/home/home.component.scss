@@ -1,0 +1,13 @@
+
+#name{
+    color : white;
+}
+
+#myPresentationcontainerContent{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    padding-left: 15%;
+    padding-right: 15%;
+}

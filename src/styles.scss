@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+html {
+    padding: 0%;
+    margin: 0%;
+}
+
+body { 
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+    margin: 0%;
+    background-image: url("assets/img/black_background_wood-wallpaper-2560x1440.jpg");
+    //background-color: rgba(223, 8, 8, 0.247);
+    -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+    background-size: cover; /* version standardisée */
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
