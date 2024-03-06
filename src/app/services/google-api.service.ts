@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import googleConnection from '../../assets/client_secret_.json';
-import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { AuthConfig, OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Observable, Subject } from 'rxjs';
 import { HttpHeaders, HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -48,7 +48,7 @@ const oAuthConfig: AuthConfig = {
   providedIn: 'root'
 })
 export class GoogleAPIService {
-  private loggedInSubject: Subject<boolean> = new Subject<boolean>();
+  loggedInSubject: Subject<boolean> = new Subject<boolean>();
   loggedIn$: Observable<boolean> = this.loggedInSubject.asObservable();
   playlists: any[] = [];
   userProfileSubject = new Subject<UserInfo>();
@@ -76,6 +76,7 @@ export class GoogleAPIService {
     })
   }
 
+  
   isLoggedIn(){
     return this.oauthservice.hasValidAccessToken();
   }

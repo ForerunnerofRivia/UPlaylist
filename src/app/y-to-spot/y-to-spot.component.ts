@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GoogleAPIService } from '../services/google-api.service';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
@@ -12,13 +12,18 @@ import { ThemePalette } from '@angular/material/core';
   templateUrl: './y-to-spot.component.html',
   styleUrls: ['./y-to-spot.component.scss']
 })
-export class YToSpotComponent {
+export class YToSpotComponent implements OnInit {
   isGoogleloggedin: boolean = false;
-  constructor(private gAPI: GoogleAPIService){}
+  constructor(private gAPI: GoogleAPIService){
+    
+  }
 
   ngOnInit(): void {
-    this.gAPI.loggedIn$.subscribe((loggedIn: boolean) => {
-      this.isGoogleloggedin = loggedIn;
+    window.addEventListener('message', event => {
+      if (event.data.type === 'CONN_STATUS') {
+        console.log('Google connection status updated');
+        this.isGoogleloggedin = event.data.data;
+      }
     });
   }
 
@@ -26,6 +31,7 @@ export class YToSpotComponent {
     window.open(window.location.origin+'/googleLogin',"Ratting","width=550,height=700,toolbar=0,status=0,");
   }
   
+
   isGoogleLoggedIn(): boolean{
     return this.gAPI.isLoggedIn();
   }
@@ -33,10 +39,5 @@ export class YToSpotComponent {
   isSpotifyLoggedIn(): boolean{
     return false;
   }
-  
-  onSpotifyLoginBtnClick(){
-
-  }
-
   
 }

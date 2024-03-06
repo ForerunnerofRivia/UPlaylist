@@ -5,15 +5,18 @@
       <section class="example-section">
         <label class="example-margin">Step 1 : Please connect to your Google account</label>
         <button id="googleConnectionButton" mat-raised-button color="primary" (click)="onGoogleLoginBtnClick()">Google Login</button>
-        <div class = "spinerDiv" *ngIf="!isGoogleloggedin">
+        <div class = "spinerDiv" *ngIf="!isGoogleloggedin; else noice">
             <mat-spinner></mat-spinner>
         </div>
+        <ng-template #noice>
+          <img class="doneimg" src="../../assets/img/done-icon.webp"/>
+        </ng-template>  
         
       </section>
   
       <section class="example-section">
         <label class="example-margin">Step 2 : Please connect to your Spotify account</label>
-        <button id="spotifyConnectionButton" mat-raised-button color="primary" (click)="onSpotifyLoginBtnClick()">Spotify Login</button>
+        <button id="spotifyConnectionButton" mat-raised-button color="primary">Spotify Login</button>
         
       </section>
 

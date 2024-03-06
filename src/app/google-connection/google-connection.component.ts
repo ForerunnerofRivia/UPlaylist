@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GoogleAPIService, UserInfo } from '../services/google-api.service';
 
 @Component({
@@ -6,27 +6,32 @@ import { GoogleAPIService, UserInfo } from '../services/google-api.service';
   templateUrl: './google-connection.component.html',
   styleUrls: ['./google-connection.component.scss']
 })
-export class GoogleConnectionComponent {
+export class GoogleConnectionComponent implements OnInit {
   isloggedin: boolean = false;
   userInfo?: UserInfo;
   playlists: string[] = [];
 
   constructor(private gAPI: GoogleAPIService){
-    gAPI.userProfileSubject.subscribe( info => {
+
+  }
+
+  ngOnInit(): void {
+    this.gAPI.userProfileSubject.subscribe( info => {
       this.userInfo = info;
     })
-
-    gAPI.startConnection();
-    
-    
-  }
-  ngOnInit(): void {
     this.gAPI.loggedIn$.subscribe((loggedIn: boolean) => {
       this.isloggedin = loggedIn;
+      console.log("Value of "+this.isloggedin);
       if(this.isloggedin){
+        //send message to ytospot on the other window
+        console.log("Sending message to ytospot");
+        window.opener.postMessage({ type: 'CONN_STATUS', data: true }, '*');
+        //log and close this winfow
+        console.log("User logged in, closing window");
         window.close();
       }   
     });
+    this.gAPI.startConnection();
   }
 
   isLoggedIn(): boolean{
