@@ -16,6 +16,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { GoogleConnectionComponent } from './google-connection/google-connection.component';
 import { YToSpotComponent } from './y-to-spot/y-to-spot.component';
 import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { YoutubeplaylistviewComponent } from './youtubeplaylistview/youtubeplaylistview.component';
 
 
 
@@ -26,7 +27,8 @@ import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/
     ParallaxDirective,
     PresentationContainerComponent,
     GoogleConnectionComponent,
-    YToSpotComponent
+    YToSpotComponent,
+    YoutubeplaylistviewComponent
   ],
   imports: [
     BrowserModule,
