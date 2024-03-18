@@ -19,16 +19,11 @@ export class YToSpotComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.addEventListener('message', event => {
-      if (event.data.type === 'CONN_STATUS') {
-        console.log('Google connection status updated');
-        this.isGoogleloggedin = event.data.data;
-      }
-    });
-  }
-
-  onGoogleLoginBtnClick(){
-    window.open(window.location.origin+'/googleLogin',"Ratting","width=550,height=700,toolbar=0,status=0,");
+    if(this.isGoogleLoggedIn()){
+      this.isGoogleloggedin = true;
+      console.log("y-to-spot(this.isGoogleloggedin):"+this.isGoogleloggedin);
+    }
+    
   }
   
 

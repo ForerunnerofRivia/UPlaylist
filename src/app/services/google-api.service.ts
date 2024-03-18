@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import googleConnection from '../../assets/client_secret_.json';
-import { AuthConfig, OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
-import { Observable, Subject, map } from 'rxjs';
-import { HttpHeaders, HttpClientModule, HttpClient } from '@angular/common/http';
+import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { Observable, Subject, catchError, map, of } from 'rxjs';
+import {  HttpClient } from '@angular/common/http';
 
-interface PlaylistResponse {
+export interface PlaylistResponse {
   kind: string;
   etag: string;
   nextPageToken: string;
@@ -12,14 +12,14 @@ interface PlaylistResponse {
   items: Playlist[];
 }
 
-interface Playlist {
+export interface Playlist {
   kind: string;
   etag: string;
   id: string;
   snippet: PlaylistSnippet;
 }
 
-interface PlaylistSnippet {
+export interface PlaylistSnippet {
   publishedAt: string;
   channelId: string;
   title: string;
@@ -29,19 +29,19 @@ interface PlaylistSnippet {
   localized: Localized;
 }
 
-interface Thumbnails {
+export interface Thumbnails {
   default: Thumbnail;
   medium: Thumbnail;
   high: Thumbnail;
 }
 
-interface Thumbnail {
+export interface Thumbnail {
   url: string;
   width: number;
   height: number;
 }
 
-interface Localized {
+export interface Localized {
   title: string;
   description: string;
 }
@@ -73,7 +73,7 @@ const oAuthConfig: AuthConfig = {
   strictDiscoveryDocumentValidation: false,
   redirectUri: googleConnection.web.redirect_uris[0],
   clientId: googleConnection.web.client_id,
-  scope: 'openid profile email https://www.googleapis.com/auth/youtube',
+  scope: 'openid profile email https://www.googleapis.com/auth/youtube.readonly',
   responseType: 'token id_token',
   silentRefreshRedirectUri: window.location.origin + '/silent-refresh',
   silentRefreshTimeout: 5000,
@@ -109,6 +109,7 @@ export class GoogleAPIService {
           this.oauthservice.loadUserProfile().then((userProfile) => {
             
             this.userProfileSubject.next(userProfile as UserInfo);
+            console.log("google-api.service(loggedInSubject):True");
             this.loggedInSubject.next(true);
           })
         }
@@ -127,21 +128,27 @@ export class GoogleAPIService {
 
   getUserPlaylists(): Observable<Playlist[]> {
     const accessToken = this.oauthservice.getAccessToken();
+    //console.log("Access token:"+ accessToken +" Granted Scopes: "+this.oauthservice.getGrantedScopes());
     const url = 'https://www.googleapis.com/youtube/v3/playlists';
+    const headers = {
+      Authorization: `Bearer ${accessToken}`
+    }
     const params = {
       part: 'snippet',
       mine: true,
-      access_token: accessToken
     };
   
-    return this.httpClient.get<PlaylistResponse>(url, { params }).pipe(
-      map(response => response.items)
+    return this.httpClient.get<PlaylistResponse>(url, { headers, params }).pipe(
+      map(response => response.items),
+      catchError(error => {
+        console.error("CUSTOM ERROR: "+error);
+        return of([]);
+      })
     );
   }
+
+  getPlaylistVideo(){}
   
 
-  getSongsOfPlaylists(){
 
-  
-  }
 }

@@ -3,7 +3,7 @@
       <h2 class="example-h2">Welcome to the tools to transfer your playlist from Youtube to Spotify</h2>
       <section class="example-section">
         <label class="example-margin">Step 1 : Please connect to your Google account</label>
-        <button id="googleConnectionButton" mat-raised-button color="primary" (click)="onGoogleLoginBtnClick()">Google Login</button>
+        <button id="googleConnectionButton" mat-raised-button color="primary" routerLink="/googleLogin">Google Login</button>
         <div class = "spinerDiv" *ngIf="!isGoogleloggedin; else noice">
             <mat-spinner></mat-spinner>
         </div>
@@ -18,14 +18,9 @@
         <button id="spotifyConnectionButton" mat-raised-button color="primary">Spotify Login</button>
         
       </section>
-
-      <section class="example-section">
-        <label class="example-margin">Step 3 : Choose the Youtube playlist to transfer</label>
-        
-      </section>
-  
       
     </mat-card-content>
+    <button id="nextbutton" mat-raised-button color="primary" routerLink="/playlistview">Next</button>
 </mat-card>
-<app-youtubeplaylistview></app-youtubeplaylistview>
+
   

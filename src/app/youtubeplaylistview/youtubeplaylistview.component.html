@@ -1,1 +1,8 @@
-<p>youtubeplaylistview works!</p>
+<mat-selection-list #playlistsList>
+    <mat-list-option *ngFor="let playlist of playlists">{{ playlist.snippet.title }}</mat-list-option>
+</mat-selection-list>
+  
+<p>
+    Options selected: {{playlistsList.selectedOptions.selected.length}}
+</p>
+

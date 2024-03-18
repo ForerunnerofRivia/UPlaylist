@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { GoogleAPIService } from '../services/google-api.service';
+import {Playlist} from '../services/google-api.service';
+import {MatListModule} from '@angular/material/list';
 
 @Component({
   selector: 'app-youtubeplaylistview',
@@ -7,10 +9,16 @@ import { GoogleAPIService } from '../services/google-api.service';
   styleUrls: ['./youtubeplaylistview.component.scss']
 })
 export class YoutubeplaylistviewComponent {
-  userPlaylist: any;
+  isGoogleloggedin: boolean = false;
+  playlists: Playlist[] = [];
   constructor(private gAPI: GoogleAPIService){
   }
 
+  ngOnInit(): void {
+    this.gAPI.getUserPlaylists().subscribe((playlists) => {
+      this.playlists = playlists;
+    });
+  }
 
   
 }

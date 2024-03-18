@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GoogleAPIService, UserInfo } from '../services/google-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-google-connection',
@@ -11,7 +12,7 @@ export class GoogleConnectionComponent implements OnInit {
   userInfo?: UserInfo;
   playlists: string[] = [];
 
-  constructor(private gAPI: GoogleAPIService){
+  constructor(private gAPI: GoogleAPIService, private router: Router){
 
   }
 
@@ -21,24 +22,11 @@ export class GoogleConnectionComponent implements OnInit {
     })
     this.gAPI.loggedIn$.subscribe((loggedIn: boolean) => {
       this.isloggedin = loggedIn;
-      console.log("Value of "+this.isloggedin);
+      console.log("google-connection(this.isloggedin):"+this.isloggedin);
       if(this.isloggedin){
-        //send message to ytospot on the other window
-        console.log("Sending message to ytospot");
-        window.opener.postMessage({ type: 'CONN_STATUS', data: true }, '*');
-        //log and close this winfow
-        console.log("User logged in, closing window");
-        window.close();
-      }   
+        this.router.navigate(['/ytospot']);
+      }
     });
     this.gAPI.startConnection();
-  }
-
-  isLoggedIn(): boolean{
-    return this.gAPI.isLoggedIn();
-  }
-
-  logout() {
-    this.gAPI.signOut();
   }
 }

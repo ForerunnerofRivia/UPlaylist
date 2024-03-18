@@ -17,6 +17,8 @@ import { GoogleConnectionComponent } from './google-connection/google-connection
 import { YToSpotComponent } from './y-to-spot/y-to-spot.component';
 import { MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { YoutubeplaylistviewComponent } from './youtubeplaylistview/youtubeplaylistview.component';
+import { MatListModule } from '@angular/material/list';
+
 
 
 
@@ -40,6 +42,7 @@ import { YoutubeplaylistviewComponent } from './youtubeplaylistview/youtubeplayl
     MatCardModule,
     HttpClientModule,
     MatProgressSpinnerModule,
+    MatListModule,
     OAuthModule.forRoot()
   ],
   providers: [],
